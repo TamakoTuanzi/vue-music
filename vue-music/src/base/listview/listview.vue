@@ -131,6 +131,9 @@
       scroll(pos) {
         this.scrollY = pos.y
       },
+      refresh() {
+        this.$refs.listview.refresh()
+      },
       _scroll(index) {
         console.log(index)
         if (!index && index !== 0) {
@@ -204,7 +207,7 @@
           color: $color-theme
     .list-fixed
       position: absolute
-      top: 0
+      top: -1px
       left: 0
       width: 100%
       .fixed-title

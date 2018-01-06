@@ -6,7 +6,7 @@
      <h1 class="title" v-html="title"></h1>
      <div class="bg-image" :style="bgStyle" ref="bgImage">
        <div class="play-wrapper" ref="playBtn">
-         <div class="play" v-show="songs.length > 0">
+         <div class="play" v-show="songs.length > 0" @click="random">
            <i class="icon-play"></i>
            <span class="text">随机播放全部</span>
          </div>
@@ -31,9 +31,11 @@
   import {prefixStyle} from 'common/js/dom'
   import Loading from 'base/loading/loading'
   import {mapActions} from 'vuex'
+  import {playlistMixin} from 'common/js/mixin'
   const TITLE_HEIGHT = 40
   const transform = prefixStyle('transform')
   export default {
+    mixins: [playlistMixin],
     props: {
       bgImage: {
         type: String,
@@ -73,6 +75,11 @@
       this.$refs.scroll.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
     },
     methods: {
+      handlePlaylist(playlist) {
+        const bottom = playlist.length > 0 ? '60px' : ''
+        this.$refs.scroll.$el.style.bottom = bottom
+        this.$refs.scroll.refresh()
+      },
       scroll(pos) {
         this.scrollY = pos.y
       },
@@ -85,8 +92,14 @@
           index: index
         })
       },
+      random() {
+        this.randomPlay({
+          list: this.songs
+        })
+      },
       ...mapActions([
-        'selectPlay'
+        'selectPlay',
+        'randomPlay'
       ])
     },
     watch: {

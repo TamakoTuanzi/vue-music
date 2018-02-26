@@ -1,0 +1,7 @@
+<view class='uesr-view'>
+  <image class='user-image' src='/images/claris.jpg'></image>
+  <text class='user-name'>hello,团子</text>
+  <view class='user-moot' bindtap='onTap'>
+    <text class='moot'>开启小程序之旅</text>
+  </view>
+</view>
